@@ -1,0 +1,138 @@
+/* 🔹 Wrapper */
+.input-field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  height: 85px;
+}
+
+/* 🔹 Label */
+.input-label {
+  font-weight: 500;
+  color: #374151;
+}
+
+/* 🔹 Main container */
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 100%; /* ✅ responsive instead of 400px */
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background: #fff;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+/* Hover */
+.search-container:hover {
+  border-color: #4096ff;
+}
+
+/* Focus (important UX) */
+.search-container:focus-within {
+  border-color: #1677ff;
+  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.15);
+}
+
+/* Error state */
+.search-container.error {
+  border-color: red;
+}
+
+/* 🔹 Prefix */
+.addon {
+  padding: 6px 10px;
+  background-color: #fafafa;
+  border-right: 1px solid #d9d9d9;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+/* 🔹 Input */
+.search-input {
+  flex: 1;
+  padding: 6px 8px;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  background: transparent;
+  color: #111;
+}
+
+/* Placeholder */
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+/* 🔹 Clear button */
+.clear-btn {
+  cursor: pointer;
+  padding: 0 8px;
+  color: #999;
+  display: flex;
+  align-items: center;
+}
+
+.clear-btn:hover {
+  color: #000;
+}
+
+/* 🔹 Suffix button */
+.search-btn {
+  padding: 6px 10px;
+  border-left: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+}
+
+/* 🔥 Password wrapper fix */
+.password-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 32px; /* space for eye */
+}
+
+/* 👁 Eye icon perfectly aligned */
+.eye-icon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.eye-icon:hover {
+  color: #000;
+}
+
+/* 🔹 Textarea */
+.textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+/* 🔹 Error text */
+.error-text {
+  color: red;
+  font-size: 12px;
+  align-self: flex-end;
+}
+
+.required {
+  color: red;
+  margin-left: 2px;
+}

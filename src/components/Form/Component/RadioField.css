@@ -1,0 +1,79 @@
+.radio-wrapper {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+/* 🔹 Group */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 🔹 Default radio */
+.radio-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 6px;
+  padding: 2px 4px;
+}
+
+.radio-item input {
+  display: none;
+}
+
+/* 🔹 Circle */
+.radio-circle {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #999;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-dot {
+  width: 8px;
+  height: 8px;
+  background: #1677ff;
+  border-radius: 50%;
+}
+
+/* 🔹 Label */
+.radio-label {
+  color: #333;
+}
+
+/* 🔹 Disabled */
+.radio-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 🔹 Button style */
+.radio-button {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 10px;
+  transition: all 0.2s;
+}
+
+.radio-button:hover {
+  border-color: #4096ff;
+}
+
+/* Selected button */
+.radio-button.selected {
+  background: #1677ff;
+  color: #fff;
+  border-color: #1677ff;
+}
+
+/* 🔹 Error */
+.radio-group.error {
+  border: 1px solid red;
+  padding: 6px;
+  border-radius: 4px;
+}

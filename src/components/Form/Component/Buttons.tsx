@@ -1,0 +1,40 @@
+import React from "react";
+
+interface ButtonProps {
+  type?: "button" | "submit" | "reset";
+  label: string;
+  styleType?:
+    | "primary"
+    | "secondary"
+    | "success"
+    | "danger"
+    | "warning"
+    | "info"
+    | "light"
+    | "dark";
+}
+
+const Buttons = ({
+  type = "button",
+  label,
+  styleType = "primary",
+}: ButtonProps) => {
+  const colorCode = {
+    primary: "btn-primary",
+    secondary: "btn-secondary",
+    success: "btn-success",
+    danger: "btn-danger",
+    warning: "btn-warning",
+    info: "btn-info",
+    light: "btn-light",
+    dark: "btn-dark",
+  };
+
+  return (
+    <button type={type} className={`btn ${colorCode[styleType]}`}>
+      {label}
+    </button>
+  );
+};
+
+export default Buttons;

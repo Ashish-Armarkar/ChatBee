@@ -1,0 +1,73 @@
+.checkbox-wrapper {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+/* 🔹 Group */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* 🔹 Item */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.checkbox-item input {
+  display: none;
+}
+
+/* 🔹 Box */
+.checkbox-box {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🔹 Checkmark */
+.checkmark {
+  width: 8px;
+  height: 8px;
+  background: #1677ff;
+}
+
+/* 🔹 Indeterminate */
+.indeterminate {
+  width: 8px;
+  height: 2px;
+  background: #1677ff;
+}
+
+/* 🔹 Label */
+.checkbox-label {
+  color: #333;
+}
+
+/* 🔹 Disabled */
+.checkbox-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 🔹 Divider */
+.divider {
+  height: 1px;
+  background: #eee;
+  margin: 8px 0;
+}
+
+/* 🔹 Error */
+.checkbox-group.error {
+  border: 1px solid red;
+  padding: 6px;
+  border-radius: 4px;
+}

@@ -1,0 +1,11 @@
+.authContainer {
+  width: 100%;
+  display: flex;
+  gap: 0;
+}
+.right {
+  width: 50%;
+  background: url("https://res.cloudinary.com/djw5fw1xp/image/upload/v1781284504/ChatVirticalBg_liizap.png")
+    no-repeat center center;
+  box-shadow: inset 5px 5px 100px 10px rgba(0, 0, 0, 0.3);
+}
