@@ -9,14 +9,16 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const env = import.meta.env;
+console.log("Environment Variables:", env);
 const firebaseConfig = {
-  apiKey: "AIzaSyAAlGPoXZSo6Ti9r2GfUmUOQYw8xnCnbHg",
-  authDomain: "chatbee-3ea23.firebaseapp.com",
-  projectId: "chatbee-3ea23",
-  storageBucket: "chatbee-3ea23.firebasestorage.app",
-  messagingSenderId: "648134838106",
-  appId: "1:648134838106:web:f64827f9625ec0d8641563",
-  measurementId: "G-RQKB498451",
+  apiKey: env.VITE_FIREBASE_API_KEY,
+  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: env.VITE_FIREBASE_APP_ID,
+  measurementId: env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
