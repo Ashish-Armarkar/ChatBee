@@ -1,0 +1,13 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.status {
+  position: absolute;
+
+  border: 2px solid #fff;
+  border-radius: 50%;
+  z-index: 1000;
+}

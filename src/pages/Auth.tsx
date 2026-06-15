@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import AuthLayout from "../layouts/AuthLayout";
 import { useNavigate } from "react-router-dom";
+import Logo from "../components/Logo";
 
 const LoginForm = lazy(() => import("../components/LoginForm"));
 const SignForm = lazy(() => import("../components/SignForm"));
@@ -21,11 +22,7 @@ const Auth = ({ isLogin }) => {
           }}
         >
           <div className="mb-2">
-            <img
-              src="https://res.cloudinary.com/djw5fw1xp/image/upload/v1781328296/ChatBeeLogo_qm5wo0.png"
-              alt=""
-              style={{ width: "100px", height: "100px" }}
-            />
+            <Logo width="100" height="100" />
           </div>
           <div
             className=" text-secondary"

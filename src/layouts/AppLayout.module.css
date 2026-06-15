@@ -1,0 +1,65 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.sidebar {
+  width: 25%;
+  height: 100vh;
+  background-color: #f3e7d6;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  gap: 0;
+}
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fffdf8;
+  height: 60px;
+  padding: 0 8px;
+}
+
+.sidebarFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fffdf8;
+  height: 60px;
+  padding: 0 8px;
+  z-index: 99999;
+}
+
+.sidebarMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: calc(100vh - 120px);
+  overflow-y: hidden;
+}
+
+.sidebarSettings {
+  cursor: pointer;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mainContainer {
+  flex-grow: 1;
+  padding: 20px;
+  background: url("https://res.cloudinary.com/djw5fw1xp/image/upload/v1781382639/ChatBeePCBG_syky7e.png")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.footerIcon {
+  cursor: pointer;
+}
