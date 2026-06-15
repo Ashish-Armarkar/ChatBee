@@ -1,6 +1,6 @@
 import AppLayout from "../layouts/AppLayout";
 
-const UserDetails = () => {
+const Dashboard = () => {
   const contarinerStyles = {
     height: "100vh",
     width: "100%",
@@ -12,4 +12,4 @@ const UserDetails = () => {
   );
 };
 
-export default UserDetails;
+export default Dashboard;

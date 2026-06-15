@@ -10,6 +10,7 @@ type Props = {
   rules?: any;
   removeDelete?: boolean;
   label: string;
+  avtarSize?: number;
 };
 
 const CLOUD_NAME = "djw5fw1xp";
@@ -22,6 +23,7 @@ const UploadField: React.FC<Props> = ({
   fileTypeExcept = [],
   rules = {},
   label,
+  avtarSize = 100,
 }) => {
   const { control } = useFormContext();
   const [preview, setPreview] = useState<string | null>(null);
@@ -81,7 +83,11 @@ const UploadField: React.FC<Props> = ({
             {/* Uploaded Images */}
             <div className="upload-grid">
               {value.map((url: string, index: number) => (
-                <div className="upload-card" key={index}>
+                <div
+                  className="upload-card"
+                  key={index}
+                  style={{ width: `${avtarSize}px`, height: `${avtarSize}px` }}
+                >
                   <img
                     src={url}
                     alt="preview"

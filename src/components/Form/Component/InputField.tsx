@@ -8,12 +8,13 @@ type InputType =
   | "amount"
   | "textarea"
   | "password"
-  | "email";
+  | "email"
+  | "phone";
 
 type InputFieldProps = {
   name: string;
   label?: string;
-  required?: boolean; // ✅ NEW
+  required?: boolean;
   suffix?: React.ReactNode;
   prefix?: React.ReactNode;
   type?: InputType;
@@ -22,7 +23,19 @@ type InputFieldProps = {
   onCustomOnChange?: (value: string) => void;
   onCustomOnBlur?: (value: string) => void;
   rules?: any;
+  maxCount?: number;
+  minCount?: number;
+
+  countryCodeName?: string;
 };
+
+const COUNTRY_CODES = [
+  { code: "+91", country: "🇮🇳" },
+  { code: "+1", country: "🇺🇸" },
+  { code: "+44", country: "🇬🇧" },
+  { code: "+61", country: "🇦🇺" },
+  { code: "+65", country: "🇸🇬" },
+];
 
 const InputField: React.FC<InputFieldProps> = ({
   name,
@@ -36,17 +49,19 @@ const InputField: React.FC<InputFieldProps> = ({
   onCustomOnChange,
   onCustomOnBlur,
   rules,
+  maxCount,
+  minCount,
 }) => {
   const { control } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
 
-  // ✅ Auto-detect required from rules
   const isRequired = required || rules?.required;
 
-  // ✅ Format number with commas
   const formatWithComma = (value: string) => {
     if (!value) return "";
+
     const [intPart, decimalPart] = value.split(".");
+
     const formattedInt = Number(intPart).toLocaleString("en-US");
 
     return decimalPart !== undefined
@@ -58,20 +73,29 @@ const InputField: React.FC<InputFieldProps> = ({
 
   const handleDecimal = (value: string) => {
     if (!decimalCount) return value;
+
     const regex = new RegExp(`^\\d*\\.?\\d{0,${decimalCount}}$`);
+
     return regex.test(value) ? value : null;
   };
 
   const handleChange = (value: string, field: any) => {
     let rawValue = removeComma(value);
 
+    if (maxCount) {
+      rawValue = rawValue.slice(0, maxCount);
+    }
+
     if (type === "amount") {
       const val = handleDecimal(rawValue);
+
       if (val === null) return;
+
       rawValue = val;
     }
 
     field.onChange(rawValue);
+
     onCustomOnChange?.(rawValue);
   };
 
@@ -80,44 +104,132 @@ const InputField: React.FC<InputFieldProps> = ({
     onCustomOnBlur?.(value);
   };
 
-  // ✅ Email validation merge
   const getRules = () => {
+    const validationRules = {
+      ...rules,
+    };
+
+    if (type === "phone") {
+      validationRules.pattern = {
+        value: /^[0-9]+$/,
+        message: "Invalid phone number",
+      };
+    }
+    if (minCount) {
+      validationRules.minLength = {
+        value: minCount,
+        message: `Minimum ${minCount} characters required`,
+      };
+    }
+
+    if (maxCount) {
+      validationRules.maxLength = {
+        value: maxCount,
+        message: `Maximum ${maxCount} characters allowed`,
+      };
+    }
+
     if (type === "email") {
-      return {
-        pattern: {
-          value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-          message: "Invalid email format",
-        },
-        ...rules,
+      validationRules.pattern = {
+        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: "Invalid email format",
       };
     }
 
     if (type === "password") {
-      return {
-        pattern: {
-          value:
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          message:
-            "Password must contain uppercase, lowercase, number, special character and be at least 8 characters long.",
-        },
-        ...rules,
+      validationRules.pattern = {
+        value:
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        message:
+          "Password must contain uppercase, lowercase, number, special character and be at least 8 characters long.",
       };
     }
-    return rules;
+
+    return validationRules;
   };
 
   const renderInput = (field: any) => {
     const commonProps = {
       className: `search-input ${type === "textarea" ? "textarea" : ""}`,
       placeholder,
-      onBlur: () => handleBlur(field.value, field),
       value: field.value || "",
-      onChange: (e: any) => handleChange(e.target.value, field),
+      maxLength: maxCount,
+      onBlur: () => handleBlur(field.value, field),
     };
 
     switch (type) {
+      case "phone":
+        return (
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              gap: "8px",
+              alignItems: "center",
+            }}
+          >
+            <Controller
+              name={`${name}_countryCode`}
+              control={control}
+              defaultValue="+91"
+              render={({ field: countryField }) => (
+                <select {...countryField} className="country-code-select">
+                  {COUNTRY_CODES.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {country.country} {country.code}
+                    </option>
+                  ))}
+                </select>
+              )}
+            />
+            <div
+              className=""
+              style={{ height: "30px", borderLeft: "1px solid #dcdcdc" }}
+            ></div>
+            <input
+              {...field}
+              type="text"
+              inputMode="numeric"
+              placeholder={placeholder}
+              className="search-input"
+              value={field.value || ""}
+              maxLength={maxCount || 10}
+              onChange={(e) => {
+                let value = e.target.value.replace(/\D/g, "");
+
+                if (maxCount) {
+                  value = value.slice(0, maxCount);
+                }
+
+                field.onChange(value);
+                onCustomOnChange?.(value);
+              }}
+              onKeyDown={(e) => {
+                const allowedKeys = [
+                  "Backspace",
+                  "Delete",
+                  "ArrowLeft",
+                  "ArrowRight",
+                  "Tab",
+                  "Home",
+                  "End",
+                ];
+
+                if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+            />
+          </div>
+        );
       case "textarea":
-        return <textarea {...field} {...commonProps} />;
+        return (
+          <textarea
+            {...field}
+            {...commonProps}
+            onChange={(e) => handleChange(e.target.value, field)}
+          />
+        );
 
       case "password":
         return (
@@ -126,7 +238,9 @@ const InputField: React.FC<InputFieldProps> = ({
               {...field}
               {...commonProps}
               type={showPassword ? "text" : "password"}
+              onChange={(e) => handleChange(e.target.value, field)}
             />
+
             <span
               className="eye-icon"
               onClick={() => setShowPassword((prev) => !prev)}
@@ -168,7 +282,41 @@ const InputField: React.FC<InputFieldProps> = ({
         );
 
       case "number":
-        return <input {...field} {...commonProps} type="number" />;
+        return (
+          <input
+            {...field}
+            {...commonProps}
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            onChange={(e) => {
+              let value = e.target.value.replace(/\D/g, "");
+
+              if (maxCount) {
+                value = value.slice(0, maxCount);
+              }
+
+              field.onChange(value);
+
+              onCustomOnChange?.(value);
+            }}
+            onKeyDown={(e) => {
+              const allowedKeys = [
+                "Backspace",
+                "Delete",
+                "ArrowLeft",
+                "ArrowRight",
+                "Tab",
+                "Home",
+                "End",
+              ];
+
+              if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) {
+                e.preventDefault();
+              }
+            }}
+          />
+        );
 
       case "amount":
         return (
@@ -177,14 +325,29 @@ const InputField: React.FC<InputFieldProps> = ({
             {...commonProps}
             type="text"
             value={formatWithComma(field.value || "")}
+            onChange={(e) => handleChange(e.target.value, field)}
           />
         );
 
       case "email":
-        return <input {...field} {...commonProps} type="email" />;
+        return (
+          <input
+            {...field}
+            {...commonProps}
+            type="email"
+            onChange={(e) => handleChange(e.target.value, field)}
+          />
+        );
 
       default:
-        return <input {...field} {...commonProps} type="text" />;
+        return (
+          <input
+            {...field}
+            {...commonProps}
+            type="text"
+            onChange={(e) => handleChange(e.target.value, field)}
+          />
+        );
     }
   };
 
@@ -195,7 +358,6 @@ const InputField: React.FC<InputFieldProps> = ({
       rules={getRules()}
       render={({ field, fieldState }) => (
         <div className="input-field-wrapper">
-          {/* ✅ Label with required */}
           {label && (
             <label className="input-label">
               {label}
@@ -210,23 +372,36 @@ const InputField: React.FC<InputFieldProps> = ({
 
             {renderInput(field)}
 
-            {/* Clear */}
-            {field.value && type !== "textarea" && type !== "password" && (
-              <span
-                className="clear-btn"
-                onClick={() => {
-                  field.onChange("");
-                  onCustomOnChange?.("");
-                }}
-              >
-                &#10005;
-              </span>
-            )}
+            {field.value &&
+              type !== "textarea" &&
+              type !== "password" &&
+              type !== "text" && (
+                <span
+                  className="clear-btn"
+                  onClick={() => {
+                    field.onChange("");
+
+                    onCustomOnChange?.("");
+                  }}
+                >
+                  ✕
+                </span>
+              )}
 
             {suffix && <div className="search-btn">{suffix}</div>}
           </div>
 
-          {/* Error */}
+          {maxCount && type !== "number" && (
+            <div
+              className="fs_12 text-end mt_4"
+              style={{
+                color: "#8B5E34",
+              }}
+            >
+              {(field.value || "").length}/{maxCount}
+            </div>
+          )}
+
           {fieldState.error && (
             <div className="error-text">{fieldState.error.message}</div>
           )}

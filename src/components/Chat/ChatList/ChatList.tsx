@@ -100,7 +100,7 @@ const ChatList = ({
               profile={chat.user.profile}
               size={54}
               status={{
-                isStatus: chat.user.isOnline,
+                isStatus: chat?.user?.isOnline,
                 statusSize: "16px",
                 top: "0",
                 left: "70%",

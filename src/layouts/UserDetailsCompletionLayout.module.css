@@ -1,0 +1,22 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  background: url("https://res.cloudinary.com/djw5fw1xp/image/upload/v1781510305/BgOnlyVertext_ekgmdu.png")
+    no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: 12px;
+}
+
+.header {
+  width: 100%;
+  height: 100px;
+}
+
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 100px);
+}

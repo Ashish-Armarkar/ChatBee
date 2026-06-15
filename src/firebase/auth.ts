@@ -82,7 +82,16 @@ export const loginUser = async (email: string, password: string) => {
     });
 
     const userData = userDoc.data();
-
+    cookieStore.set({
+      name: "session",
+      value: JSON.stringify({
+        status: true,
+        message: "Login successful!",
+        user,
+        isFirstTimeUser: !userData?.isProfileCompleted,
+        userData,
+      }),
+    });
     return {
       status: true,
       message: "Login successful!",

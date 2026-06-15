@@ -1,0 +1,395 @@
+/* ==========================================
+   CHATBEE APP.CSS
+========================================== */
+
+:root {
+  --primary: #b7791f;
+  --primary-light: #d9a441;
+
+  --background: #faf5ee;
+  --surface: #fffdf8;
+  --secondary: #f0d7a1;
+
+  --text-primary: #3e2f24;
+  --text-secondary: #6d5d4f;
+  --text-muted: #8b5e34;
+
+  --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+
+  --border: #e8d7bc;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================
+   RESET
+========================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: Inter, "Segoe UI", sans-serif;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+.hide_scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide_scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================
+   FONT SIZE
+========================================== */
+
+.fs_10 {
+  font-size: 10px !important;
+}
+.fs_11 {
+  font-size: 11px !important;
+}
+.fs_12 {
+  font-size: 12px !important;
+}
+.fs_13 {
+  font-size: 13px !important;
+}
+.fs_14 {
+  font-size: 14px !important;
+}
+.fs_15 {
+  font-size: 15px !important;
+}
+.fs_16 {
+  font-size: 16px !important;
+}
+.fs_18 {
+  font-size: 18px !important;
+}
+.fs_20 {
+  font-size: 20px !important;
+}
+.fs_24 {
+  font-size: 24px !important;
+}
+.fs_32 {
+  font-size: 32px !important;
+}
+.fs_48 {
+  font-size: 48px !important;
+}
+.fs_56 {
+  font-size: 56px !important;
+}
+
+/* ==========================================
+   FONT WEIGHT
+========================================== */
+
+.fw_300 {
+  font-weight: 300 !important;
+}
+.fw_400 {
+  font-weight: 400 !important;
+}
+.fw_500 {
+  font-weight: 500 !important;
+}
+.fw_600 {
+  font-weight: 600 !important;
+}
+.fw_700 {
+  font-weight: 700 !important;
+}
+.fw_800 {
+  font-weight: 800 !important;
+}
+
+/* ==========================================
+   BORDER RADIUS
+========================================== */
+
+.radius_2 {
+  border-radius: 2px !important;
+}
+.radius_4 {
+  border-radius: 4px !important;
+}
+.radius_6 {
+  border-radius: 6px !important;
+}
+.radius_8 {
+  border-radius: 8px !important;
+}
+.radius_12 {
+  border-radius: 12px !important;
+}
+.radius_16 {
+  border-radius: 16px !important;
+}
+.radius_20 {
+  border-radius: 20px !important;
+}
+.radius_24 {
+  border-radius: 24px !important;
+}
+
+.radius_full {
+  border-radius: 9999px !important;
+}
+
+/* ==========================================
+   PADDING
+========================================== */
+
+.p_4 {
+  padding: 4px !important;
+}
+.p_8 {
+  padding: 8px !important;
+}
+.p_12 {
+  padding: 12px !important;
+}
+.p_16 {
+  padding: 16px !important;
+}
+.p_20 {
+  padding: 20px !important;
+}
+.p_24 {
+  padding: 24px !important;
+}
+
+.px_8 {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+.px_12 {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+.px_16 {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+.py_8 {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.py_12 {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+.py_16 {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+/* ==========================================
+   MARGIN
+========================================== */
+
+.m_4 {
+  margin: 4px !important;
+}
+.m_8 {
+  margin: 8px !important;
+}
+.m_12 {
+  margin: 12px !important;
+}
+.m_16 {
+  margin: 16px !important;
+}
+.m_20 {
+  margin: 20px !important;
+}
+
+.mt_4 {
+  margin-top: 4px !important;
+}
+.mt_8 {
+  margin-top: 8px !important;
+}
+.mt_12 {
+  margin-top: 12px !important;
+}
+.mt_16 {
+  margin-top: 16px !important;
+}
+
+.mb_4 {
+  margin-bottom: 4px !important;
+}
+.mb_8 {
+  margin-bottom: 8px !important;
+}
+.mb_12 {
+  margin-bottom: 12px !important;
+}
+.mb_16 {
+  margin-bottom: 16px !important;
+}
+
+/* ==========================================
+   GAP
+========================================== */
+
+.gap_4 {
+  gap: 4px !important;
+}
+.gap_8 {
+  gap: 8px !important;
+}
+.gap_12 {
+  gap: 12px !important;
+}
+.gap_16 {
+  gap: 16px !important;
+}
+.gap_20 {
+  gap: 20px !important;
+}
+.gap_24 {
+  gap: 24px !important;
+}
+
+/* ==========================================
+   WIDTH
+========================================== */
+
+.w_full {
+  width: 100% !important;
+}
+
+.w_fit {
+  width: fit-content !important;
+}
+
+/* ==========================================
+   HEIGHT
+========================================== */
+
+.h_full {
+  height: 100% !important;
+}
+
+.h_fit {
+  height: fit-content !important;
+}
+
+/* ==========================================
+   TEXT
+========================================== */
+
+.text_primary {
+  color: var(--text-primary) !important;
+}
+
+.text_secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text_muted {
+  color: var(--text-muted) !important;
+}
+
+.text_center {
+  text-align: center !important;
+}
+
+/* ==========================================
+   BACKGROUND
+========================================== */
+
+.bg_primary {
+  background: var(--primary) !important;
+}
+
+.bg_secondary {
+  background: var(--secondary) !important;
+}
+
+.bg_surface {
+  background: var(--surface) !important;
+}
+
+/* ==========================================
+   SHADOWS
+========================================== */
+
+.shadow_sm {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.shadow_md {
+  box-shadow: var(--shadow-md) !important;
+}
+
+.shadow_lg {
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* ==========================================
+   CURSOR
+========================================== */
+
+.cursor_pointer {
+  cursor: pointer !important;
+}
+
+/* ==========================================
+   CHAT CARD
+========================================== */
+
+.chat_card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.chat_card:hover {
+  background: #fff4dd;
+}
+
+/* ==========================================
+   ONLINE STATUS
+========================================== */
+
+.online {
+  background: var(--success);
+}
+
+.offline {
+  background: #9ca3af;
+}

@@ -136,3 +136,14 @@
   color: red;
   margin-left: 2px;
 }
+
+.country-code-select {
+  min-width: 80px;
+  height: 42px;
+  border: none;
+  outline: none;
+  background: white;
+  cursor: pointer;
+  padding: 0 8px;
+  color: #3e2f24;
+}
