@@ -1,15 +1,14 @@
 import React from "react";
 import ProfileImage from "./Profile/ProfileImage";
 import { Pencil } from "lucide-react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../Store/Store";
 
-const UserInfo = () => {
+const UserInfo = ({ userData }) => {
   return (
     <div className="">
       <div className="">
-        <ProfileImage
-          profile="https://res.cloudinary.com/djw5fw1xp/image/upload/v1775902424/main-sample.png"
-          size={128}
-        />
+        <ProfileImage profile={userData?.profileImage[0]} size={128} />
       </div>
       <div className="d-flex flex-column mt-1 text-center">
         <div className="position-relative ">
@@ -21,9 +20,9 @@ const UserInfo = () => {
           >
             <Pencil size={12} />
           </div>
-          <div className="fw-bold fs-6">Ashish Armarkar</div>
+          <div className="fw-bold fs-6">{userData?.userName}</div>
         </div>
-        <div className="text-muted">+91 7709931178</div>
+        <div className="text-muted">{userData?.email}</div>
       </div>
     </div>
   );

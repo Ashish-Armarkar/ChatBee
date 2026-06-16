@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 
 import {
@@ -82,24 +83,50 @@ export const loginUser = async (email: string, password: string) => {
     });
 
     const userData = userDoc.data();
-    cookieStore.set({
-      name: "session",
-      value: JSON.stringify({
-        status: true,
-        message: "Login successful!",
-        user,
-        isFirstTimeUser: !userData?.isProfileCompleted,
-        userData,
-      }),
-    });
-    return {
+    const session = {
       status: true,
       message: "Login successful!",
       user,
       isFirstTimeUser: !userData?.isProfileCompleted,
+      isProfileCompleted: userData?.isProfileCompleted,
       userData,
     };
+
+    window.localStorage.setItem("session", JSON.stringify(session));
+    window.dispatchEvent(new Event("session-updated"));
+
+    return session;
   } catch (error: any) {
     throw new Error(error?.message || "Login failed. Please try again.");
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    const user = auth.currentUser;
+
+    if (user) {
+      const userRef = doc(db, "users", user.uid);
+
+      await updateDoc(userRef, {
+        isOnline: false,
+        lastSeen: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+    }
+
+    await signOut(auth);
+
+    // Remove Local Storage
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("session");
+    }
+
+    return {
+      status: true,
+      message: "Logged out successfully.",
+    };
+  } catch (error: any) {
+    throw new Error(error?.message || "Logout failed. Please try again.");
   }
 };

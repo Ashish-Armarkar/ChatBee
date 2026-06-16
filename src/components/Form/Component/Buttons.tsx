@@ -3,6 +3,8 @@ import React from "react";
 interface ButtonProps {
   type?: "button" | "submit" | "reset";
   label: string;
+  isLoading: boolean;
+  isDisabled: boolean;
   styleType?:
     | "primary"
     | "secondary"
@@ -18,6 +20,8 @@ const Buttons = ({
   type = "button",
   label,
   styleType = "primary",
+  isDisabled = false,
+  isLoading = false,
 }: ButtonProps) => {
   const colorCode = {
     primary: "btn-primary",
@@ -31,7 +35,11 @@ const Buttons = ({
   };
 
   return (
-    <button type={type} className={`btn ${colorCode[styleType]}`}>
+    <button
+      type={type}
+      className={`btn ${colorCode[styleType]}`}
+      disabled={isDisabled || isLoading}
+    >
       {label}
     </button>
   );

@@ -39,7 +39,7 @@ const ChatSegment = ({ options, handleOnChange }) => {
                     color: selected == index ? "#B7791F" : "#ffffff",
                     width: "2.2rem",
                   }}
-                  count={ele.pending_messages}
+                  count={ele.pending}
                 />
               </div>
             </div>

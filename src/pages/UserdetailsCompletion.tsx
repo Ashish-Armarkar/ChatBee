@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import VerticalStepper from "../components/Stepper/VerticalStepper";
 import UserdetailCompletionForm from "../components/UserdetailCompletionForm";
-import { setStep } from "../components/Store/Slices/UserSlice";
-import type { RootState } from "../components/Store/Store";
+import { setStep } from "../Store/Slices/UserSlice";
+import type { RootState } from "../Store/Store";
 
 const UserdetailsCompletion = () => {
   const stepData = useSelector((state: RootState) => state.step);

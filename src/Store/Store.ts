@@ -4,6 +4,7 @@ import stepReducer from "./Slices/UserSlice";
 export const store = configureStore({
   reducer: {
     step: stepReducer,
+    userData: stepReducer,
   },
 });
 

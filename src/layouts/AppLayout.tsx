@@ -4,12 +4,33 @@ import Logo from "../components/Logo";
 import { LogOut, Menu } from "lucide-react";
 import DrawerComp from "../components/Drawer/DrawerComp";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ProfileImage from "../components/Profile/ProfileImage";
 import UserInfo from "../components/UserInfo";
 import ChatSegment from "../components/Segments/ChatSegment";
 import ChatList from "../components/Chat/ChatList/ChatList";
+import { logoutUser } from "../firebase/auth";
+import { showToast } from "../components/Toast";
+import { useSelector } from "react-redux";
+import type { RootState } from "../Store/Store";
+import Block from "../components/Card/Block";
+
 const AppLayout = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const navigate = useNavigate();
+  const userData = useSelector((state: RootState) => state.userData).userData;
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      localStorage.clear();
+      showToast("Logged out successfully.", "success");
+      navigate("/login");
+    } catch (error: any) {
+      showToast(error?.message || "Logout failed. Please try again.", "error");
+      console.error("Logout error:", error);
+    }
+  };
 
   const userMessagesList = [
     {
@@ -116,7 +137,40 @@ const AppLayout = () => {
         onClose={() => setIsDrawerOpen(false)}
         title="User Profile"
       >
-        <UserInfo />
+        <UserInfo userData={userData} />
+        <div className="">
+          <Block
+            cardWidth={100}
+            cardContent={[
+              {
+                id: 1,
+                title: "Ashish Armarkar",
+                description: "Frontend Developer",
+                prefix: <span>👤</span>,
+                suffix: <span>→</span>,
+              },
+              {
+                id: 2,
+                title: "Disha",
+                description: "UI/UX Designer",
+                prefix: <span>👤</span>,
+                suffix: <span>→</span>,
+              },
+            ]}
+          />
+
+          <Block
+            cardWidth={100}
+            cardContent={[
+              {
+                id: 1,
+                title: "Ashish Armarkar",
+                description: "Frontend Developer",
+                prefix: <span>👤</span>,
+              },
+            ]}
+          />
+        </div>
       </DrawerComp>
       <div className={appStyle.sidebar}>
         <div className={appStyle.sidebarHeader}>
@@ -135,20 +189,16 @@ const AppLayout = () => {
             <ChatSegment
               options={[
                 {
-                  label: "All",
-                  pending_messages: 101,
+                  label: "Messages",
+                  pending: 101,
                 },
                 {
-                  label: "Unread",
-                  pending_messages: 12,
+                  label: "Requested",
+                  pending: 12,
                 },
                 {
-                  label: "Archived",
-                  pending_messages: 5,
-                },
-                {
-                  label: "Groups",
-                  pending_messages: 8,
+                  label: "Add friend",
+                  pending: 5,
                 },
               ]}
               handleOnChange={(tab: string) => {
@@ -169,24 +219,19 @@ const AppLayout = () => {
           <div className={appStyle.userProfile}>
             <div className={appStyle.userInfo}>
               <div className={appStyle.avatar}>
-                <ProfileImage
-                  profile="https://res.cloudinary.com/djw5fw1xp/image/upload/v1775902424/main-sample.png"
-                  size={40}
-                  status={{
-                    isStatus: true,
-                    statusSize: "15px",
-                    top: "10%",
-                    left: "75%",
-                  }}
-                />
+                <ProfileImage profile={userData?.profileImage[0]} size={40} />
               </div>
               <div className={appStyle.userNameContainer}>
-                <div className={appStyle.userName}>Ashish Armarkar</div>
+                <div className={appStyle.userName}>{userData?.userName}</div>
               </div>
             </div>
           </div>
           <div className="">
-            <div className={appStyle.footerIcon}>
+            <div
+              className={appStyle.footerIcon}
+              style={{ cursor: "pointer" }}
+              onClick={handleLogout}
+            >
               <LogOut stroke="#EF4444" />
             </div>
           </div>

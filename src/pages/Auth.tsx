@@ -33,7 +33,7 @@ const Auth = ({ isLogin }) => {
 
           {isLogin ? <LoginForm /> : <SignForm />}
           <p className="mt-2" style={{ fontSize: "11px", alignSelf: "end" }}>
-            Don't have an account?{" "}
+            {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
             <span
               className="text-primary"
               style={{ cursor: "pointer" }}

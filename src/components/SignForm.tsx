@@ -1,16 +1,26 @@
-import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import InputField from "./Form/Component/InputField";
 import { registerUser } from "../firebase/auth";
 import { useMutation } from "@tanstack/react-query";
 import { showToast } from "./Toast";
 import Buttons from "./Form/Component/Buttons";
 
+type SignFormData = {
+  email: string;
+  password: string;
+};
+
 const SignForm = () => {
-  const methods = useForm();
+  const methods = useForm<SignFormData>();
   const { handleSubmit } = methods;
-  const signupMutation = useMutation({
-    mutationFn: (userData) => registerUser(userData.email, userData.password),
+  const navigate = useNavigate();
+  const signupMutation = useMutation<
+    { status: boolean; message: string },
+    Error,
+    SignFormData
+  >({
+    mutationFn: ({ email, password }) => registerUser(email, password),
 
     onSuccess: (data) => {
       if (!data?.status) {
@@ -19,6 +29,7 @@ const SignForm = () => {
       }
 
       showToast(data.message || "Signup successful!", "success");
+      navigate("/login", { replace: true });
     },
 
     onError: (error: any) => {
@@ -26,7 +37,7 @@ const SignForm = () => {
     },
   });
 
-  const handleSignup = (data) => {
+  const handleSignup = (data: any) => {
     signupMutation.mutate(data);
   };
   return (
@@ -53,7 +64,9 @@ const SignForm = () => {
         />
         <Buttons
           type={"submit"}
-          label={signupMutation.isPending ? "Signing up..." : "Signup"}
+          label={signupMutation.isLoading ? "Signing up..." : "Signup"}
+          isDisabled={signupMutation.isLoading}
+          isLoading={signupMutation.isLoading}
         />
       </form>
     </FormProvider>
