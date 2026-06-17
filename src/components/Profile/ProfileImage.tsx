@@ -9,9 +9,9 @@ const ProfileImage = ({
   size = 128,
   status = {
     isStatus: false,
-    statusSize: "16px",
-    top: "10%",
-    left: "62%",
+    statusSize: 16,
+    top: 10,
+    left: 62,
   },
 }) => (
   <div className={profileImageStyle.container}>
@@ -20,10 +20,10 @@ const ProfileImage = ({
         className={profileImageStyle.status}
         style={{
           backgroundColor: statusColorCode[status.isStatus],
-          width: status.statusSize,
-          height: status.statusSize,
-          top: status.top,
-          left: status.left,
+          width: `${status.statusSize}px`,
+          height: `${status.statusSize}px`,
+          top: `${status.top}%`,
+          left: `${status.left}%`,
         }}
       ></div>
     )}

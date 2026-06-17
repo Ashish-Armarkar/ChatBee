@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from "antd";
 
 interface CardItem {
   id?: string | number;
@@ -20,40 +19,58 @@ const Block: React.FC<BlockProps> = ({
   cardWidth = 100,
   handleOnClick,
 }) => {
+  console.log({ cardContent });
+
   return (
-    <Card
+    <div
       style={{
         width: `${cardWidth}%`,
         background: "#ffffff24",
         border: "1px solid #d5d5d5",
-        margin: "16px 0",
+        borderRadius: "4px",
+        backdropFilter: "blur(10px)",
+        overflow: "hidden",
+        margin: "12px 0",
       }}
     >
-      {cardContent.map((item, index) => (
+      {cardContent?.map((item, index) => (
         <React.Fragment key={item.id ?? index}>
           <div
-            className={`d-flex align-items-center justify-content-between py-2 ${
+            className={`d-flex align-items-center justify-content-between p_12 ${
               handleOnClick ? "cursor_pointer" : ""
             }`}
             onClick={() => handleOnClick?.(item)}
+            style={{
+              transition: "all 0.2s ease",
+            }}
           >
             {item.prefix && (
               <div
                 className="d-flex align-items-center justify-content-center"
-                style={{ width: "40px" }}
+                style={{
+                  minWidth: "40px",
+                }}
               >
                 {item.prefix}
               </div>
             )}
 
             <div className="d-flex flex-column flex-grow-1 px-2">
-              <div className="fw-bold">{item.title}</div>
+              <div
+                className="fw_600 fs_14"
+                style={{
+                  color: item.textColor ? item.textColor : "#3E2F24",
+                }}
+              >
+                {item.title}
+              </div>
 
               {item.description && (
                 <div
+                  className="fs_12"
                   style={{
-                    color: "#6c757d",
-                    fontSize: "13px",
+                    color: "#6D5D4F",
+                    marginTop: "2px",
                   }}
                 >
                   {item.description}
@@ -64,7 +81,9 @@ const Block: React.FC<BlockProps> = ({
             {item.suffix && (
               <div
                 className="d-flex align-items-center justify-content-center"
-                style={{ width: "40px" }}
+                style={{
+                  minWidth: "40px",
+                }}
               >
                 {item.suffix}
               </div>
@@ -73,15 +92,16 @@ const Block: React.FC<BlockProps> = ({
 
           {index !== cardContent.length - 1 && (
             <div
-              className="w-75 m-auto"
               style={{
-                borderTop: "1px solid #dedede",
+                width: "85%",
+                margin: "0 auto",
+                borderTop: "1px solid #e5e5e5",
               }}
             />
           )}
         </React.Fragment>
       ))}
-    </Card>
+    </div>
   );
 };
 

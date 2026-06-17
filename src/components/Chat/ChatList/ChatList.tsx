@@ -20,7 +20,7 @@ interface Chat {
   user: {
     userId: string;
     name: string;
-    profile: string;
+    profileImage: string[];
     isOnline?: boolean;
     isGroup?: boolean;
   };
@@ -97,13 +97,13 @@ const ChatList = ({
             }}
           >
             <ProfileImage
-              profile={chat.user.profile}
+              profile={chat.user.profileImage[0]}
               size={54}
               status={{
-                isStatus: chat?.user?.isOnline,
-                statusSize: "16px",
-                top: "0",
-                left: "70%",
+                isStatus: chat?.user?.isOnline ?? false,
+                statusSize: 16,
+                top: 0,
+                left: 70,
               }}
             />
 
@@ -115,7 +115,7 @@ const ChatList = ({
                     color: "#3E2F24",
                   }}
                 >
-                  {chat.user.name}
+                  {chat.user.userName}
                 </div>
 
                 <small

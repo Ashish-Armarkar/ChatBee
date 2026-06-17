@@ -5,10 +5,12 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../Store/Store";
 
 const UserInfo = ({ userData }) => {
+  console.log({ userData });
+
   return (
     <div className="">
       <div className="">
-        <ProfileImage profile={userData?.profileImage[0]} size={128} />
+        <ProfileImage profile={userData?.profileImage?.[0]} size={128} />
       </div>
       <div className="d-flex flex-column mt-1 text-center">
         <div className="position-relative ">
@@ -18,7 +20,7 @@ const UserInfo = ({ userData }) => {
               left: "73%",
             }}
           >
-            <Pencil size={12} />
+            {userData.editable && <Pencil size={12} />}
           </div>
           <div className="fw-bold fs-6">{userData?.userName}</div>
         </div>

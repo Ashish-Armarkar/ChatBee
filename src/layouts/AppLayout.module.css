@@ -54,7 +54,6 @@
 
 .mainContainer {
   flex-grow: 1;
-  padding: 20px;
   background: url("https://res.cloudinary.com/djw5fw1xp/image/upload/v1781382639/ChatBeePCBG_syky7e.png")
     no-repeat center center;
   background-size: cover;

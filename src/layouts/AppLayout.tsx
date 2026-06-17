@@ -1,9 +1,18 @@
 import appStyle from "./AppLayout.module.css";
 import Logo from "../components/Logo";
 
-import { LogOut, Menu } from "lucide-react";
+import {
+  Ban,
+  ChevronRight,
+  CircleUserRound,
+  LogOut,
+  Menu,
+  Pencil,
+  Trash,
+  User,
+} from "lucide-react";
 import DrawerComp from "../components/Drawer/DrawerComp";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileImage from "../components/Profile/ProfileImage";
 import UserInfo from "../components/UserInfo";
@@ -14,9 +23,14 @@ import { showToast } from "../components/Toast";
 import { useSelector } from "react-redux";
 import type { RootState } from "../Store/Store";
 import Block from "../components/Card/Block";
+import UserRightDrawer from "../components/UserRightDrawer";
+import UserChatWith from "../components/Chat/ChatList/UserChat/UserChatWith";
 
 const AppLayout = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState({
+    isOpen: false,
+    user: null,
+  });
   const navigate = useNavigate();
   const userData = useSelector((state: RootState) => state.userData).userData;
 
@@ -38,8 +52,9 @@ const AppLayout = () => {
       participants: ["user_100", "user_101"],
       user: {
         userId: "user_101",
-        name: "Mr. MC",
-        profile: "https://randomuser.me/api/portraits/men/1.jpg",
+        userName: "Mr. MC",
+        email: "mr.mc@gmail.com",
+        profileImage: ["https://randomuser.me/api/portraits/men/1.jpg"],
         isOnline: true,
       },
       lastMessage: {
@@ -54,8 +69,9 @@ const AppLayout = () => {
       participants: ["user_100", "user_102"],
       user: {
         userId: "user_102",
-        name: "Miss. BC",
-        profile: "https://randomuser.me/api/portraits/women/44.jpg",
+        userName: "Miss. BC",
+        email: "miss.bc@gmail.com",
+        profileImage: ["https://randomuser.me/api/portraits/women/44.jpg"],
         isOnline: true,
       },
       lastMessage: {
@@ -70,8 +86,9 @@ const AppLayout = () => {
       participants: ["user_100", "user_103"],
       user: {
         userId: "user_103",
-        name: "Rohit Sharma",
-        profile: "https://randomuser.me/api/portraits/men/32.jpg",
+        userName: "Rohit Sharma",
+        email: "rohit.sharma@gmail.com",
+        profileImage: ["https://randomuser.me/api/portraits/men/32.jpg"],
         isOnline: false,
       },
       lastMessage: {
@@ -86,8 +103,9 @@ const AppLayout = () => {
       participants: ["user_100", "user_101", "user_102", "user_103"],
       user: {
         userId: "group_101",
-        name: "Frontend Team",
-        profile: "https://cdn-icons-png.flaticon.com/512/681/681494.png",
+        userName: "Frontend Team",
+        email: "frontend.team@chatbee.com",
+        profileImage: ["https://cdn-icons-png.flaticon.com/512/681/681494.png"],
         isGroup: true,
       },
       lastMessage: {
@@ -102,8 +120,9 @@ const AppLayout = () => {
       participants: ["user_100", "user_104"],
       user: {
         userId: "user_104",
-        name: "Priya",
-        profile: "https://randomuser.me/api/portraits/women/68.jpg",
+        userName: "Priya",
+        email: "priya@gmail.com",
+        profileImage: ["https://randomuser.me/api/portraits/women/68.jpg"],
         isOnline: true,
       },
       lastMessage: {
@@ -118,8 +137,9 @@ const AppLayout = () => {
       participants: ["user_100", "user_105"],
       user: {
         userId: "user_105",
-        name: "Akash",
-        profile: "https://randomuser.me/api/portraits/men/76.jpg",
+        userName: "Akash",
+        email: "akash@gmail.com",
+        profileImage: ["https://randomuser.me/api/portraits/men/76.jpg"],
         isOnline: true,
       },
       lastMessage: {
@@ -130,48 +150,103 @@ const AppLayout = () => {
       unreadCount: 3,
     },
   ];
+
+  console.log({ userData });
+  const theActitivties = {
+    true: [
+      [
+        {
+          id: 1,
+          title: "Account",
+          description: "Manage your account",
+          prefix: (
+            <span>
+              <User size={20} />
+            </span>
+          ),
+          suffix: (
+            <span>
+              <ChevronRight size={16} />
+            </span>
+          ),
+        },
+      ],
+      [
+        {
+          id: 1,
+          title: "About",
+          description: "Frontend Developer",
+          prefix: (
+            <span>
+              <CircleUserRound size={18} />
+            </span>
+          ),
+          suffix: (
+            <span>
+              <Pencil size={16} />
+            </span>
+          ),
+        },
+      ],
+    ],
+    false: [
+      [
+        {
+          id: 1,
+          title: "About",
+          description: "Frontend Developer",
+          prefix: (
+            <span>
+              <CircleUserRound size={18} />
+            </span>
+          ),
+        },
+
+        {
+          id: 2,
+          title: "Contactn Number",
+          description: "Frontend Developer",
+          prefix: (
+            <span>
+              <CircleUserRound size={18} />
+            </span>
+          ),
+        },
+
+        {
+          id: 2,
+          title: "Clear Chat",
+          description: "Frontend Developer",
+          prefix: (
+            <span>
+              <CircleUserRound size={18} />
+            </span>
+          ),
+        },
+      ],
+    ],
+  };
+  const userInfo = useMemo(() => {
+    const user = isDrawerOpen?.user;
+    const myActivities =
+      theActitivties[isDrawerOpen?.user?.email === userData?.email];
+    return {
+      userInfo: user,
+      editable: isDrawerOpen?.user?.email === userData?.email,
+      activities: myActivities,
+    };
+  }, [JSON.stringify(isDrawerOpen), JSON.stringify(userData)]);
+
+  const [otherUser, setOtherUser] = useState(null);
   return (
     <div className={appStyle.container}>
-      <DrawerComp
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        title="User Profile"
-      >
-        <UserInfo userData={userData} />
-        <div className="">
-          <Block
-            cardWidth={100}
-            cardContent={[
-              {
-                id: 1,
-                title: "Ashish Armarkar",
-                description: "Frontend Developer",
-                prefix: <span>👤</span>,
-                suffix: <span>→</span>,
-              },
-              {
-                id: 2,
-                title: "Disha",
-                description: "UI/UX Designer",
-                prefix: <span>👤</span>,
-                suffix: <span>→</span>,
-              },
-            ]}
-          />
-
-          <Block
-            cardWidth={100}
-            cardContent={[
-              {
-                id: 1,
-                title: "Ashish Armarkar",
-                description: "Frontend Developer",
-                prefix: <span>👤</span>,
-              },
-            ]}
-          />
-        </div>
-      </DrawerComp>
+      <UserRightDrawer
+        isDrawerOpen={isDrawerOpen.isOpen}
+        setIsDrawerOpen={() =>
+          setIsDrawerOpen((prev) => ({ ...prev, isOpen: false }))
+        }
+        userData={userInfo}
+      />
       <div className={appStyle.sidebar}>
         <div className={appStyle.sidebarHeader}>
           <div className={appStyle.sidebarLogo}>
@@ -179,7 +254,7 @@ const AppLayout = () => {
           </div>
           <div
             className={appStyle.sidebarSettings}
-            onClick={() => setIsDrawerOpen(true)}
+            onClick={() => setIsDrawerOpen({ isOpen: true, user: userData })}
           >
             <Menu stroke="#A39281" />
           </div>
@@ -211,7 +286,7 @@ const AppLayout = () => {
               userMessagesList={userMessagesList}
               loading={false}
               error={false}
-              onChatSelect={() => {}}
+              onChatSelect={(data) => setOtherUser(data as any)}
             />
           </div>
         </div>
@@ -237,7 +312,14 @@ const AppLayout = () => {
           </div>
         </div>
       </div>
-      <div className={appStyle.mainContainer}></div>
+      <div className={appStyle.mainContainer}>
+        {otherUser && (
+          <UserChatWith
+            secondPersonData={otherUser}
+            setIsDrawerOpen={(data) => setIsDrawerOpen(data)}
+          />
+        )}
+      </div>
     </div>
   );
 };
